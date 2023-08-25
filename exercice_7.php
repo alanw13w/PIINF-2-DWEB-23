@@ -11,20 +11,30 @@
         td{
             width:30px;
         }
+        th{
+            width: 30px;
+            border: 1px solid black;
+            background-color: lightgray;
+        }
 
     </style>
 </head>
 <body>
 <?php
 echo "<table>";
+
 for($i=1;$i<=12;$i++){
     echo "<tr>";
+
+    echo "<th>$i</th>";
 
     for($j=1;$j<=12;$j++){
         echo "<td>".$i*$j."</td>";
     }
     echo "</tr>";
 }
+
+
 echo "</table>"
 ?>
 </body>
