@@ -43,16 +43,15 @@ require_once("aeroports.inc.php");
 
 echo "<form action='swissresult.php' method ='post'>";
 
-
-//création d'une constante par défaut (Genève)
+//création d'une constante par défaut (Genève)Cours inter-entreprise
 define("pardefaut", "GVA");
 
 // importation du tableau en haut dans le champ select
 echo "De"."<select name='decolage'>";
 foreach($aeroports AS $key => $dest){
     echo "<option value=\"".$key."\">".$dest."</option>";
-
 }
+
 //faire une autoselection de notre constante Genève
 echo "<option selected>".pardefaut."</option>";
 echo "</select>";

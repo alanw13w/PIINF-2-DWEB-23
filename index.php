@@ -16,36 +16,39 @@
 <body>
 <?php
 
-echo "<table>";
-echo "<th>Clefs</th>";
-echo "<th>Valeurs</th>";
-foreach ($_POST AS $key => $val){
-    echo "<tr>";
-    echo "<td>$key</td>";
-    echo "<td>$val</td>";
-    echo "</tr>";
-}
-echo "</table>";
+if(isset($_POST['nom'])) {
+    echo "<table>";
+    echo "<th>Clefs</th>";
+    echo "<th>Valeurs</th>";
+    foreach ($_POST as $key => $val) {
+        echo "<tr>";
+        echo "<td>$key</td>";
+        echo "<td>$val</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
 
-echo "<pre>";
+    echo "<pre>";
     print_r($_POST);
-"</pre>";
-
-
- echo "<table>";
-echo "<th>Clefs</th>";
-echo "<th>Valeurs</th>";
-foreach ($_GET AS $key => $val){
-    echo "<tr>";
-    echo "<td>$key</td>";
-    echo "<td>$val</td>";
-    echo "</tr>";
+    "</pre>";
 }
-echo "</table>";
 
-echo "<pre>";
-print_r($_GET);
-"</pre>";
+if(isset($_GET['nom'])) {
+    echo "<table>";
+    echo "<th>Clefs</th>";
+    echo "<th>Valeurs</th>";
+    foreach ($_GET as $key => $val) {
+        echo "<tr>";
+        echo "<td>$key</td>";
+        echo "<td>$val</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+
+    echo "<pre>";
+    print_r($_GET);
+    "</pre>";
+}
  ?>
 </body>
 </html>
