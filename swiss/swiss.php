@@ -37,51 +37,99 @@ session_start();
 <body>
 <?php
 echo "<img src='logo-swiss.png' alt='logo swiss air' class='center'>";
-echo "<h2>Réservez vol aller</h2>";
-//echo "<h2>Réservez votre vol</h2>";
-
 
 //invocations du tableau aeroports et catégories
 require_once("aeroports.inc.php");
 require_once ("category.inc.php");
 
+//bloc d'instruction pour voir si la dimentions 'vols' existe
+if(array_key_exists('vols', $_SESSION)){
+    echo "<h2>Réservez vol retour</h2>";
+}
+else {
+    echo "<h2>Réservez votre vol allé</h2>";
+}
 
+
+
+
+//création du formulaire
 echo "<form action='swissresult.php' method ='post'>";
+//bloc d'instruction pour l'allé/retour
+if(array_key_exists('vols', $_SESSION))
+{
+    // importation du tableau en haut dans le champ select
+    echo "De" . "<select name='decolage'>";
+    foreach ($aeroports as $key => $dest) {
+        echo "<option value=" . $key . ">" . $dest . "</option>";
+    }
+    //faire une autoselection de notre des anciennes arrivées/décolages
+    echo "<option selected>" . $aeroports[$_SESSION['vols'][0]['arrivé']] . "</option>";
+    echo "</select>";
 
-//création d'une constante par défaut (Genève)Cours inter-entreprise
-define("pardefaut", "GVA");
 
-// importation du tableau en haut dans le champ select
-echo "De"."<select name='decolage'>";
-foreach($aeroports AS $key => $dest){
-    echo "<option value=\"".$key."\">".$dest."</option>";
+    echo "À" . "<select class='À' name='arrivé'>";
+    foreach ($aeroports as $key => $dest) {
+        echo "<option value=\"" . $key . "\">" . $dest . "</option>";
+    }
+    echo "<option selected>" . $aeroports[$_SESSION['vols'][0]['decolage']] . "</option>";
+    echo "</select>" . "<br>";
 }
 
-//faire une autoselection de notre constante Genève
-echo "<option selected>".pardefaut."</option>";
-echo "</select>";
 
-echo "À"."<select class='À' name='arrivé'>";
-foreach($aeroports AS $key => $dest){
-    echo "<option value=\"".$key."\">".$dest."</option>";
+
+else {
+    //création d'une constante par défaut (Genève)Cours inter-entreprise
+    define("pardefaut", "GVA");
+    // importation du tableau en haut dans le champ select
+    echo "De" . "<select name='decolage'>";
+    foreach ($aeroports as $key => $dest) {
+        echo "<option value=" . $key . ">" . $dest . "</option>";
+    }
+    //faire une autoselection de notre constante Genève
+    echo "<option selected>" . pardefaut . "</option>";
+    echo "</select>";
+
+
+    echo "À" . "<select class='À' name='arrivé'>";
+    foreach ($aeroports as $key => $dest) {
+        echo "<option value=\"" . $key . "\">" . $dest . "</option>";
+    }
+    echo "</select>" . "<br>";
 }
-echo "</select>"."<br>";
 
 
-$date = date("d.m.Y");
-$demain = date("d") + 1  .".".date("m").".".date("Y");
-echo "Vol aller"."<input type='date' name='date_depart' value=$date><br><br>";
-//echo "Vol retour"."<input type='text' name='date_retour' value=$demain>"."<br>"."<br>";
 
 
-echo $category['adultes']."<input type='number' name='Adultes' value='1' min='1' max='4'>"."<br>";
-echo $category['enfants']."<input type='number' name='Enfants' value='0' min='0' max='4'>"."<br>";
-echo $category['bebes']."<input class='bebe' type='number' name='Bébés' value='0' min='0' max='4'>"."<br><br>";
+//date d'aujourd'hui
+$date = date("Y-m-d");
+echo "Date "."<input type='date' name='date_depart' value=$date><br><br>";
 
 
+
+
+//bloc d'instruction pour reprendre le même nombre de personnes ou les mettre à zero
+if(array_key_exists('vols', $_SESSION))
+{
+    echo $category['adultes']."<input type='number' name='Adultes' value=".$_SESSION['vols'][0]['Adultes']." min='1' max='4'>"."<br>";
+    echo $category['enfants']."<input type='number' name='Enfants' value=".$_SESSION['vols'][0]['Enfants']." min='0' max='4'>"."<br>";
+    echo $category['bebes']."<input class='bebe' type='number' name='Bébés' value=".$_SESSION['vols'][0]['Bébés']." min='0' max='4'>"."<br><br>";
+}
+
+
+
+else{
+    echo $category['adultes']."<input type='number' name='Adultes' value='1' min='1' max='4'>"."<br>";
+    echo $category['enfants']."<input type='number' name='Enfants' value='0' min='0' max='4'>"."<br>";
+    echo $category['bebes']."<input class='bebe' type='number' name='Bébés' value='0' min='0' max='4'>"."<br><br>";
+}
+
+
+
+//la checkbox
 echo "<input type='checkbox' name='reserver_siège' value='1'>"."Réserver votre siège ?"."<br>"."<br>";
 
-
+//le bouton submit
 echo "<input type='submit' name='Recherche' value='Rechercher votre vol' class='center'>";
 
 echo "</form>";
