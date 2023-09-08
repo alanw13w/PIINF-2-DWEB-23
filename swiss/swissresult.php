@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,26 +11,48 @@
 <body>
 
 <?php
-//invocations du tableau aeroports
+//invocations des tableau aeroports et category
 require_once("aeroports.inc.php");
 require_once ("category.inc.php");
 
 
-
-echo "<h3>Informations concernant votre vol au départ de ".$aeroports[$_POST['decolage']]." à ".$aeroports[$_POST['arrivé']]."</h3>";
+//on met les information du $_POST dans la $_SESSION
 $_SESSION['vols'][] = $_POST;
 
+
+echo "<h3>Informations concernant votre vol au départ de ".$aeroports[$_SESSION['vols'][0]['decolage']]." à ".$aeroports[$_SESSION['vols'][0]['arrivé']]."</h3>";
+
+
+
+
+//On écris de ou on part, le nombre de personnes etc.
+$personnes = ($_SESSION['vols'][0]['Adultes']) + ($_SESSION['vols'][0]['Enfants']) + ($_SESSION['vols'][0]['Bébés']);
 echo "Départ : ".$aeroports[$_SESSION['vols'][0]['decolage']]." (".$_SESSION['vols'][0]['decolage'].")"."<br>";
 echo "Arrivé : ".$aeroports[$_SESSION['vols'][0]['arrivé']]." (".$_SESSION['vols'][0]['arrivé'].")"."<br>";
 echo "Date de départ : ".$_SESSION['vols'][0]['date_depart']."<br>";
 echo "Passagers : ".$_SESSION['vols'][0]['Adultes']." Adulte(s), ".$_SESSION['vols'][0]['Enfants']." Enfant(s), ".$_SESSION['vols'][0]['Bébés']." Bébé(s)"."<br>";
 
 
+
+
+//on imprime le tableau $_SESSION
 echo "<pre>";
 print_r($_SESSION);
 echo "</pre>";
 echo "<br>";
-echo "<a href='retour.php'>Réserver un vol retour</a>";
+
+
+
+//bloc d'instruction pour savoir si on a fini notre "commande". Si oui on détruit la session
+if(array_key_exists(1, $_SESSION['vols'])){
+    session_destroy();
+    echo "<a href='swiss.php'>Terminer ma commande</a>";
+}
+
+
+else {
+    echo "<a href='swiss.php'>Réserver un vol retour</a>";
+}
 ?>
 </body>
 </html>
