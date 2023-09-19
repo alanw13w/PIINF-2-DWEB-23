@@ -12,7 +12,7 @@
 </head>
 <body>
 <?php
-$tab = array("nom" => "Alan", "prenom" => "Wiedmer","adresse" => "Epines 6","npa" => "2746", "ville" => "Crémines","email" => "alan.wiedmer@ceff.ch");
+$tab = array("nom" => "Alan", "prenom" => "Wiedmer","adresse" => "Rue de la gare 139","npa" => "2746", "ville" => "Crémines","email" => "alan.wiedmer@ceff.ch");
 
  echo "<table>";
 echo "<th> Clé </th>";
