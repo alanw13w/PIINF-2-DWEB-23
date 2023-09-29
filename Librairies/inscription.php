@@ -22,7 +22,7 @@
 
 
                 <div class="panel-body">
-                                            <form id="inscription_form">
+                                            <form id="inscription_form" action="check.php" method="post">
                                                 <!-- Nom -->
                                                 <div class="form-group row">
                                                     <label for="nom_per" class="col-sm-2 col-form-label">Nom</label>
@@ -62,7 +62,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-sm-offset-2 checkbox">
                                                         <label class="col-sm-10 col-form-label">
-                                                            <input type="checkbox" id="news_letter" name="news_letter">La formation d'informaticien m'intéresse
+                                                            <input type="checkbox" id="news_letter" name="news_letter" value="1"  checked="checked">La formation d'informaticien m'intéresse
                                                         </label>
                                                     </div>
                                                 </div>
