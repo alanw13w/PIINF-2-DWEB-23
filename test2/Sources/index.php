@@ -22,16 +22,50 @@ session_start();
     <body>
         <?php
         require_once("articles.php");
-   
+
+        if(!isset($_SESSION['panier'])){
+            foreach ($articles AS $key => $value){
+                $_SESSION['panier'][$key] = 0;
+            }
+        }
+
+
+        if(isset($_POST['plus'])){
+            //print_r($_POST);
+            $_SESSION['panier'][$_POST['id']]++;
+        }
+        elseif (isset($_POST['moins'])){
+            if($_SESSION['panier'][$_POST['id']] > 0){
+                $_SESSION['panier'][$_POST['id']]--;
+            }
+        }
+
         echo "<div id=\"panier\">";
 
         echo "<h2>Votre panier contient : </h2>";
-        echo $articles[1]['nom']." ".$articles[1]['prix']." => CHF ".$articles[1]['prix']."<br>";
-        echo $articles[2]['nom']." ".$articles[2]['prix']." => CHF ".$articles[2]['prix']."<br>";
-        echo $articles[3]['nom']." ".$articles[3]['prix']." => CHF ".$articles[3]['prix']."<br>";
-        echo $articles[4]['nom']." ".$articles[4]['prix']." => CHF ".$articles[4]['prix']."<br>";
-        echo $articles[5]['nom']." ".$articles[5]['prix']." => CHF ".$articles[5]['prix']."<br>";
-        echo "total : CHF ";
+
+
+
+        echo "<table";
+        $prix_tot = 0;
+        foreach ($articles AS $key => $article){
+            $nb = $_SESSION['panier'][$key];
+            if($nb > 0) {
+                $prix = $nb * $article['prix'];
+                echo "<tr>";
+                echo "<td>" . $nb . "</td>";
+                echo "<td>" . $article['nom'] . "</td>";
+                echo "<td>(" . $article['prix'] . ")</td>";
+                echo "<td> ==> </td>";
+                echo "<td>" . $prix . "</td>";
+                echo "</tr><br>";
+                $prix_tot += $prix;
+            }
+        }
+        echo "</table>";
+
+
+        echo "Total : CHF ".$prix_tot;
 
         echo "</div>";
 
@@ -58,12 +92,7 @@ session_start();
             echo "\n\t\t\t</form>\n\t\t</td>";
 
             echo "\n\t</tr>";
-            $_SESSION[] = $articles[$id+1];
         }
-
-        echo "<pre>";
-        print_r($_SESSION);
-        echo "</pre>";
 
         //session_destroy();
         echo "</table>";
